@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from bson.objectid import ObjectId
 from app.database import mongo
 from app.models import Item
@@ -6,6 +6,9 @@ from datetime import datetime
 
 api_bp = Blueprint("api", __name__)
 
+@api_bp.route('/')
+def home():
+    return render_template('index.html') 
 
 @api_bp.route("/todo_entries", methods=["POST"])
 def create_item():
@@ -13,15 +16,18 @@ def create_item():
     if not data or "name" not in data:
         return jsonify({"error": "Invalid input, 'name' is required and JSON must be sent"}), 400
     name = data["name"]
-    descr = data["description"]
+   # descr = data["description"]
     timestamp = datetime.now().isoformat()
     
-    item = {"name": name, "description": descr, "time": timestamp}
+    #item = {"name": name, "description": descr, "time": timestamp}
+    item = {"name": name, "time": timestamp}
+    
     print(item)
     result = mongo.db.todo_entries.insert_one(item)
     objId = str(result.inserted_id)
     print(objId)
-    return jsonify({"id": objId, "name": name, "description": descr, "time": timestamp}), 201
+    #return jsonify({"id": objId, "name": name, "description": descr, "time": timestamp}), 201
+    return jsonify({"id": objId, "name": name, "time": timestamp}), 201
 
 @api_bp.route("/todo_entries", methods=["GET"])
 def get_items():
