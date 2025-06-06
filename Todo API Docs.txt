@@ -1,0 +1,46 @@
+https://todo-backend-liyx.onrender.com/api/todo_entries - POST : creates item.
+	e.g. https://todo-backend-liyx.onrender.com/api/todo_entries -H "Content-Type: application/json" -d "{\"name\": \"Chocolate Droppa's New Mixtape , buy it\"}"
+{
+	"id":"68429f9ed9d401b2ad95dee0",
+	"name":"Chocolate Droppa's New Mixtape , buy it",
+	"time":"2025-06-06T07:58:22.798964"
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+https://todo-backend-liyx.onrender.com/api/todo_entries - GET : gets items.
+	e.g. retur/api/todo_entries -GET returns
+[
+  {
+    "id": "68416b64898268767422ee25",
+    "name": "Buy and Cook groceries for kids  and wife "
+  },
+  {
+    "id": "68428816cf37aa4b0ae7916f",
+    "name": "Laptop"
+  },
+  {
+    "id": "68428847cf37aa4b0ae79170",
+    "name": "Buy New Laptop for Sade"
+  }
+]
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+https://todo-backend-liyx.onrender.com/api/todo_entries/<item_id> where <item_id> is the object_id - PUT : edits and updates items.
+	e.g. https://todo-backend-liyx.onrender.com/api/todo_entries/68429f9ed9d401b2ad95dee0 -H "Content-Type: application/json" -d "{\"name\": \"Chocolate Droppa's 	     New Mixtape is Dropping tomorrow.\"}"
+
+{
+	"id":"68429f9ed9d401b2ad95dee0",
+	"name":"Chocolate Droppa's New Mixtape is Dropping tomorrow."
+}
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+https://todo-backend-liyx.onrender.com/api/todo_entries/<item_id> where <item_id> is the object_id - DELETE : deletes list. Returns message.
+
+	e.g. https://todo-backend-liyx.onrender.com/api/todo_entries/68429f9ed9d401b2ad95dee0
+
+{
+	"message":"Item delete is successful"
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
