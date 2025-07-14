@@ -5,7 +5,67 @@ Base URL:
 
 ---
 
-## 1. Create a Todo Item
+## Authentication
+
+All todo endpoints require authentication via JWT.  
+Obtain a token by registering and logging in, then include it in the `Authorization` header as `Bearer <token>`.
+
+### 1. Register
+
+**POST** `/api/register`  
+Creates a new user account.
+
+**Request Example:**
+```http
+POST /api/register
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+
+**Response Example:**
+```json
+{
+  "message": "Registration successful"
+}
+```
+
+---
+
+### 2. Login
+
+**POST** `/api/login`  
+Authenticates a user and returns a JWT token.
+
+**Request Example:**
+```http
+POST /api/login
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+
+**Response Example:**
+```json
+{
+  "access_token": "<JWT_TOKEN>"
+}
+```
+
+---
+
+## Todo Endpoints (Require JWT)
+
+Add header to all requests:  
+`Authorization: Bearer <JWT_TOKEN>`
+
+### 3. Create a Todo Item
 
 **POST** `/api/todo_entries`  
 Creates a new todo item.
@@ -13,6 +73,7 @@ Creates a new todo item.
 **Request Example:**
 ```http
 POST /api/todo_entries
+Authorization: Bearer <JWT_TOKEN>
 Content-Type: application/json
 
 {
@@ -31,10 +92,16 @@ Content-Type: application/json
 
 ---
 
-## 2. Get All Todo Items
+### 4. Get All Todo Items
 
 **GET** `/api/todo_entries`  
 Retrieves all todo items.
+
+**Request Example:**
+```http
+GET /api/todo_entries
+Authorization: Bearer <JWT_TOKEN>
+```
 
 **Response Example:**
 ```json
@@ -46,17 +113,13 @@ Retrieves all todo items.
   {
     "id": "68428816cf37aa4b0ae7916f",
     "name": "Laptop"
-  },
-  {
-    "id": "68428847cf37aa4b0ae79170",
-    "name": "Buy New Laptop for Sade"
   }
 ]
 ```
 
 ---
 
-## 3. Update a Todo Item
+### 5. Update a Todo Item
 
 **PUT** `/api/todo_entries/<item_id>`  
 Updates the name of a todo item.
@@ -64,6 +127,7 @@ Updates the name of a todo item.
 **Request Example:**
 ```http
 PUT /api/todo_entries/68429f9ed9d401b2ad95dee0
+Authorization: Bearer <JWT_TOKEN>
 Content-Type: application/json
 
 {
@@ -81,7 +145,7 @@ Content-Type: application/json
 
 ---
 
-## 4. Delete a Todo Item
+### 6. Delete a Todo Item
 
 **DELETE** `/api/todo_entries/<item_id>`  
 Deletes a todo item.
@@ -89,6 +153,7 @@ Deletes a todo item.
 **Request Example:**
 ```http
 DELETE /api/todo_entries/68429f9ed9d401b2ad95dee0
+Authorization: Bearer <JWT_TOKEN>
 ```
 
 **Response Example:**
@@ -104,3 +169,4 @@ DELETE /api/todo_entries/68429f9ed9d401b2ad95dee0
 
 - Replace `<item_id>` with the actual `id` of the todo item.
 - All requests and responses use JSON format.
+- Always include your JWT token in the
