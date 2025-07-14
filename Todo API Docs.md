@@ -131,7 +131,7 @@ Authorization: Bearer <JWT_TOKEN>
 Content-Type: application/json
 
 {
-  "name": "Chocolate Droppa's New Mixtape is Dropping tomorrow."
+  "name": "Chocolate Droppa's New Mixtape is Drop ping tomorrow."
 }
 ```
 
