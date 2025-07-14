@@ -1,5 +1,22 @@
 from app.database import mongo
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+
+class User:
+    @staticmethod
+    def create_user(username, password):
+        hashed = generate_password_hash(password)
+        user = {"username": username, "password": hashed}
+        mongo.db.users.insert_one(user)
+        return user
+
+    @staticmethod
+    def find_by_username(username):
+        return mongo.db.users.find_one({"username": username})
+
+    @staticmethod
+    def verify_password(user, password):
+        return check_password_hash(user["password"], password)
 
 class Item:
     @staticmethod
