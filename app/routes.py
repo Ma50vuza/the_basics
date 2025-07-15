@@ -9,19 +9,23 @@ from flask_jwt_extended import (
 
 api_bp = Blueprint("api", __name__)
 
-# Initialize JWT in your app factory (in __init__.py)
-# from flask_jwt_extended import JWTManager
-# jwt = JWTManager(app)
 
 @api_bp.route("/api/register", methods=["POST"])
 def register():
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
-    if not username or not password:
-        return jsonify({"error": "Username and password required"}), 400
+    verify_password = data.get("verify_password")
+
+    if not username or not password or not verify_password:
+        return jsonify({"error": "Username, password, and verify_password are required"}), 400
+
+    if password != verify_password:
+        return jsonify({"error": "Passwords do not match"}), 400
+
     if User.find_by_username(username):
         return jsonify({"error": "User already exists"}), 409
+
     User.create_user(username, password)
     return jsonify({"message": "Registration successful"}), 201
 
