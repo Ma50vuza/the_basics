@@ -24,10 +24,10 @@ def register():
     if password != verify_password:
         return jsonify({"error": "Passwords do not match"}), 400
 
-    if User.find_by_username(username):
+    if User.find_by_email(email):
         return jsonify({"error": "User already exists"}), 409
 
-    User.create_user(username, password)
+    User.create_user(username, email, password)
     return jsonify({"message": "Registration successful"}), 201
 
 @api_bp.route("/api/login", methods=["POST"])
