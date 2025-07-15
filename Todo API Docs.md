@@ -13,7 +13,7 @@ Obtain a token by registering and logging in, then include it in the `Authorizat
 ### 1. Register
 
 **POST** `/api/register`  
-Creates a new user account.
+Creates a new user account. Requires password confirmation.
 
 **Request Example:**
 ```http
@@ -22,9 +22,14 @@ Content-Type: application/json
 
 {
   "username": "your_username",
-  "password": "your_password"
+  "password": "your_password",
+  "verify_password": "your_password"
 }
 ```
+
+- `username`: Desired username (string, required)
+- `password`: Desired password (string, required)
+- `verify_password`: Must match `password` (string, required)
 
 **Response Example:**
 ```json
