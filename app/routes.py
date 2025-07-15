@@ -14,11 +14,12 @@ api_bp = Blueprint("api", __name__)
 def register():
     data = request.get_json()
     username = data.get("username")
+    email = data.get("email")
     password = data.get("password")
     verify_password = data.get("verify_password")
 
-    if not username or not password or not verify_password:
-        return jsonify({"error": "Username, password, and verify_password are required"}), 400
+    if not username or not password or not verify_password or not email:
+        return jsonify({"error": "Username, password, verify_password, and email are required"}), 400
 
     if password != verify_password:
         return jsonify({"error": "Passwords do not match"}), 400
@@ -32,12 +33,12 @@ def register():
 @api_bp.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
-    username = data.get("username")
+    email = data.get("email")
     password = data.get("password")
-    user = User.find_by_username(username)
+    user = User.find_by_email(email)
     if not user or not User.verify_password(user, password):
         return jsonify({"error": "Invalid credentials"}), 401
-    access_token = create_access_token(identity=username)
+    access_token = create_access_token(identity=email)
     return jsonify({"access_token": access_token}), 200
 
 # Protect todo routes:

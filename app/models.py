@@ -4,15 +4,15 @@ from datetime import datetime
 
 class User:
     @staticmethod
-    def create_user(username, password):
+    def create_user(username, email, password):
         hashed = generate_password_hash(password)
-        user = {"username": username, "password": hashed}
+        user = {"username": username, "email": email, "password": hashed}
         mongo.db.users.insert_one(user)
         return user
 
     @staticmethod
-    def find_by_username(username):
-        return mongo.db.users.find_one({"username": username})
+    def find_by_email(email):
+        return mongo.db.users.find_one({"email": email})
 
     @staticmethod
     def verify_password(user, password):
