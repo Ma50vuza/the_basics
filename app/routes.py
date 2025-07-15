@@ -50,7 +50,8 @@ def create_item():
         return jsonify({"error": "Invalid input, 'name' is required and JSON must be sent"}), 400
     name = data["name"]
     timestamp = datetime.now().isoformat()
-    item = {"name": name, "time": timestamp}
+    user_email = get_jwt_identity()
+    item = {"name": name, "time": timestamp, "user_email": user_email}
     result = mongo.db.todo_entries.insert_one(item)
     objId = str(result.inserted_id)
     return jsonify({"id": objId, "name": name, "time": timestamp}), 201
@@ -58,24 +59,29 @@ def create_item():
 @api_bp.route("/api/todo_entries", methods=["GET"])
 @jwt_required()
 def get_items():
-    items = mongo.db.todo_entries.find()
+    user_email = get_jwt_identity()
+    items = mongo.db.todo_entries.find({"user_email": user_email})
     return jsonify([Item.to_dict(item) for item in items])
 
 @api_bp.route("/api/todo_entries/<string:item_id>", methods=["PUT"])
 @jwt_required()
 def update_item(item_id):
+    user_email = get_jwt_identity()
     data = request.get_json()
-    update_data = {"$set": {"name": data.get("name"), "description":data.get("description")}}
-    result = mongo.db.todo_entries.update_one({"_id": ObjectId(item_id)}, update_data)
+    update_data = {"$set": {"name": data.get("name"), "description": data.get("description")}}
+    # Only update if the item belongs to the user
+    result = mongo.db.todo_entries.update_one({"_id": ObjectId(item_id), "user_email": user_email}, update_data)
     if result.matched_count:
-        updated_item = mongo.db.todo_entries.find_one({"_id": ObjectId(item_id)}) 
+        updated_item = mongo.db.todo_entries.find_one({"_id": ObjectId(item_id)})
         return jsonify(Item.to_dict(updated_item))
-    return jsonify({"error": "Item not found"}), 404
+    return jsonify({"error": "Item not found or not authorized"}), 404
 
-@api_bp.route("/api/todo_entries/<string:item_id>", methods = ['DELETE'])
+@api_bp.route("/api/todo_entries/<string:item_id>", methods=["DELETE"])
 @jwt_required()
 def delete_item(item_id):
-    result = mongo.db.todo_entries.delete_one({"_id": ObjectId(item_id)})
+    user_email = get_jwt_identity()
+    # Only delete if the item belongs to the user
+    result = mongo.db.todo_entries.delete_one({"_id": ObjectId(item_id), "user_email": user_email})
     if result.deleted_count:
         return jsonify({"message": "Item delete is successful"})
-    return jsonify({"error": "Item wasnt found"}), 404
+    return jsonify({"error": "Item wasnt found or not authorized"}), 404
