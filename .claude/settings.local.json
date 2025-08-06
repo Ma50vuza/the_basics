@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter run:*)",
+      "Bash(./gradlew:*)",
+      "Bash(java:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(sudo apt:*)",
+      "Bash(sudo apt install:*)",
+      "Bash(/home/davina/Downloads/android-studio/jbr/bin/java -version)",
+      "Bash(export JAVA_HOME=/home/davina/Downloads/android-studio/jbr)",
+      "Bash(flutter pub:*)",
+      "Bash(flutter build:*)"
+    ],
+    "deny": []
+  }
+}
