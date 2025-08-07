@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Todo App',
+      title: 'Just Do It',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const AuthWrapper(),
       debugShowCheckedModeBanner: false,
