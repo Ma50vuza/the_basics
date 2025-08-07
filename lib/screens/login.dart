@@ -254,8 +254,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      '© 2025 Just Do It App. All rights reserved. S.Vuza',
-                      style: TextStyle(color: Colors.white60, fontSize: 12),
+                      '© 2025 Just Do It App. All rights reserved. (By S.Vuza)',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 4),
