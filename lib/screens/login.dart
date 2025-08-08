@@ -199,11 +199,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              // Footer
+              // Simplified Footer
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
-                  vertical: 16,
+                  vertical: 12,
                   horizontal: 20,
                 ),
                 decoration: BoxDecoration(
@@ -218,41 +218,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Social media or additional links (optional)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            // Privacy policy action
-                          },
-                          child: const Text(
-                            'Privacy Policy',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        const Text(
-                          ' • ',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // Terms of service action
-                          },
-                          child: const Text(
-                            'Terms of Service',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
                     const Text(
                       '© 2025 Just Do It App. All rights reserved. (By S.Vuza)',
                       style: TextStyle(color: Colors.white, fontSize: 12),
